@@ -1,0 +1,46 @@
+from os import listdir
+from os.path import isfile, join
+import os
+import threading
+from multiprocessing import Pool
+
+
+def get_file_map(dir_path):
+    file_map = {}
+    for f in listdir(dir_path):
+        file_path = join(dir_path, f)
+        if isfile(file_path):
+            file_map[file_path] = os.path.getsize(file_path)
+    sorted_file_map = sorted(file_map.items(), key=lambda x: x[1])
+    return dict(sorted_file_map)
+
+def read_file(file_path):
+    dummyContent = [i.strip().split() for i in open(file_path).readlines()]
+    print(file_path)
+
+def initialize_threads(file_map):
+    p = Pool(10)
+
+    threads = []
+    thread_data = [[] for _ in range(2)]
+    thread_sizes = [0] * 2
+    for index in range(0, len(file_map), 10):
+        for i in range(10):
+        #    t = threading.Thread(target=read_file, args=(file_map.popitem()[0],))
+            threads.append(file_map.popitem()[0])
+        #    t.start()
+        p.map(read_file, threads)
+        threads.clear()
+    #for thread in threads:
+     #   thread.join()
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    file_map = get_file_map('/Users/hilaldemir/PycharmProjects/pythonProject/files')
+    initialize_threads(file_map)
+
+        dir_path = str(sys.argv[1])
+    num_processes = int(sys.argv[2]) if len(sys.argv) > 2 else 10
+    file_paths = get_sorted_file_paths(dir_path)
+    initialize_processes(file_paths, num_processes)
