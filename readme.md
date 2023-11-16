@@ -6,7 +6,7 @@ This Python script is designed to efficiently process a collection of files in p
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/parallel-file-processing.git
+   git clone https://github.com/hilal-demir/ParallelFileProcessing.git
    cd parallel-file-processing
 
 2. **Run the Script:**
