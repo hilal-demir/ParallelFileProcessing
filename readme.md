@@ -1,7 +1,15 @@
 # Parallel File Processing Script
 
-This Python script is designed to efficiently process a collection of files in parallel. It takes a directory path and an optional number of processes as command-line arguments, retrieves a list of files from the specified directory, and sorts them based on their sizes in descending order. The script then initializes a process pool to minimize processing skew and efficiently handle a potentially large number of files.
+This Python script takes a directory path and an optional number of threads as command-line arguments.
+It retrieves a list of files from the specified directory, sorts them based on their sizes in descending order.
+Each thread continually receives files, aiming to distribute workload evenly based on skew values. Skew is calculated
+using a formula considering the difference between a thread's processed data and the average, normalized by the maximum
+processed data. Threads operate concurrently, dynamically handling new files to minimize imbalances. Global variables
+and a lock ensure safe data sharing. The algorithm prints each thread's processed files upon completion.
 
+The goal is to minimize processing skew by distributing the files among the
+specified number of threads. The script uses the threading module to achieve parallelism,
+aiming to efficiently handle a potentially large number of files while minimizing the overall processing time.
 ## Usage
 
 1. **Clone the Repository:**
